@@ -35,6 +35,9 @@ datasets=[iris_X,sonar_X,votes_X]
 results=[iris_Y,sonar_Y,votes_Y]
 scores=[]
 names=['iris','sonar','votes']
+from sklearn.neural_network import MLPClassifier
+from sklearn.metrics import accuracy_score
+
 for number in range(3):
     #split between train and test
     X_test, X_train, Y_test, Y_train = train_test_split(datasets[number], results[number], test_size=0.8, random_state=1234)
@@ -43,14 +46,12 @@ for number in range(3):
     scores_indiv=[]
     #We try the 3 layers proposed by the exercise
     for i in neurons:
-        from sklearn.neural_network import MLPClassifier
         model=MLPClassifier(hidden_layer_sizes=(i,), activation='relu')
         t1=time.time()
         model.fit(X_train,Y_train)
         t2=time.time()
         training_time=t2-t1
         predictions=model.predict(X_test)
-        from sklearn.metrics import accuracy_score
         scores_indiv.append([accuracy_score(predictions, Y_test),training_time])
     scores.append([names[number],scores_indiv])
     
