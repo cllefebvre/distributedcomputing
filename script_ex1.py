@@ -33,17 +33,17 @@ votes_X=pd.DataFrame(data=onehot_encoded)
 #We process the 3 datasets with our NN
 datasets=[iris_X,sonar_X,votes_X]
 results=[iris_Y,sonar_Y,votes_Y]
-scores=[]
 names=['iris','sonar','votes']
+title_list=[]
+neuron_list=[]
+score_list=[]
+training_time_list=[]
 from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import accuracy_score
-
 for number in range(3):
     #split between train and test
     X_test, X_train, Y_test, Y_train = train_test_split(datasets[number], results[number], test_size=0.8, random_state=1234)
     neurons=[5,10,50]
-    a=0
-    scores_indiv=[]
     #We try the 3 layers proposed by the exercise
     for i in neurons:
         model=MLPClassifier(hidden_layer_sizes=(i,), activation='relu')
@@ -52,7 +52,12 @@ for number in range(3):
         t2=time.time()
         training_time=t2-t1
         predictions=model.predict(X_test)
-        scores_indiv.append([accuracy_score(predictions, Y_test),training_time])
-    scores.append([names[number],scores_indiv])
-    
-print(scores)
+        title_list.append(names[number])
+        neuron_list.append(i)
+        score_list.append(accuracy_score(predictions, Y_test))
+        training_time_list.append(training_time)
+        
+dico={'title':title_list,'neurons':neuron_list,'scores':score_list,'training_time':training_time_list}
+results=pd.DataFrame(data=dico)
+print(results)
+
