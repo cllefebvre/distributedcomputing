@@ -55,7 +55,7 @@ from sklearn.metrics import accuracy_score
 for number in range(3):
     for activ in activations:
         #split between train and test
-        X_test, X_train, Y_test, Y_train = train_test_split(datasets[number], results[number], test_size=0.8, random_state=1234)
+        X_test, X_train, Y_test, Y_train = train_test_split(datasets[number], results[number], train_size=0.8, random_state=1234)
         #We try the 3 layers proposed by the exercise
         model=MLPClassifier(hidden_layer_sizes=(5,20,100,), activation=activ)
         t1=time.time()
@@ -67,7 +67,7 @@ for number in range(3):
         score_list.append(accuracy_score(predictions, Y_test))
         training_time_list.append(training_time)
         activation_function_list.append(activ)
-        fold_list.append(0)
+        fold_list.append(1)
 
 #Then K-fold
 from sklearn.model_selection import KFold

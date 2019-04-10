@@ -42,7 +42,7 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import accuracy_score
 for number in range(3):
     #split between train and test
-    X_test, X_train, Y_test, Y_train = train_test_split(datasets[number], results[number], test_size=0.8, random_state=1234)
+    X_test, X_train, Y_test, Y_train = train_test_split(datasets[number], results[number], train_size=0.8, random_state=1234)
     neurons=[5,10,50]
     #We try the 3 layers proposed by the exercise
     for i in neurons:
@@ -56,8 +56,6 @@ for number in range(3):
         neuron_list.append(i)
         score_list.append(accuracy_score(predictions, Y_test))
         training_time_list.append(training_time)
-        
 dico={'title':title_list,'neurons':neuron_list,'scores':score_list,'training_time':training_time_list}
 results=pd.DataFrame(data=dico)
 print(results)
-
